@@ -83,18 +83,20 @@ void reflectBall(Ball *ball, Bat *bat, HitLocation location, pBool flip) {
         switch(location) {
         case HIT_TOP:    normal.y = 1; break;
         case HIT_BOTTOM: normal.y =-1; break;
-        case HIT_LEFT:   normal.x = flip ?  1 : -1; break;
-        case HIT_RIGHT:  normal.x = flip ? -1 :  1; break;
+        case HIT_LEFT:   normal.x = flip ? -1 :  1; break;
+        case HIT_RIGHT:  normal.x = flip ?  1 : -1; break;
         }
 
-        int value = key_states[bat->key_down] - key_states[bat->key_up];
-        value *= -1;
-        normal.y += (f32)value;
+        // normal.y += (f32)value * BALL_SPEED;
+        // normal = pNormalize(normal);
 
-        f32 dot = pDot(normal, ball->velocity);
-        Vec2f tmp0 = pMul(normal, dot);
-        Vec2f reflection = pMul(tmp0, 2);
+        f32 dot = pDot(normal, ball->velocity) * 2;
+        Vec2f reflection = pMul(normal, dot);
         ball->velocity = pSub(ball->velocity, reflection);
+
+        int value = key_states[bat->key_down] - key_states[bat->key_up];
+        // value *= -1;
+        ball->vy += value * BALL_SPEED;
 }
 
 void testBat(int hit_enum, Bat *bat, Ball *ball, pBool flip) {
