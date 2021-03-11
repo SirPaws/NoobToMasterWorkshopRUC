@@ -7,7 +7,7 @@
 #include "game_general.h"
 #include "bat.h"
 
-#define BALL_RADIUS 16
+#define BALL_RADIUS 8
 #define BALL_SPEED 8
 
 typedef struct Ball Ball;
